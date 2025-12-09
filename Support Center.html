@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Support Center FAQ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.15);
+      --accent-strong: #16a34a;
+      --card-bg: #020617;
+      --card-soft: #0b1220;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --danger: #ef4444;
+      --radius-xl: 18px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 24px 12px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 960px;
+      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.11), transparent 60%),
+                  radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.1), transparent 55%),
+                  #020617cc;
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      padding: 28px 20px 32px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    @media (min-width: 768px) {
+      .page {
+        padding: 32px 32px 40px;
+      }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    header .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      font-size: 12px;
+      color: var(--accent);
+      width: fit-content;
+    }
+
+    header h1 {
+      font-size: clamp(1.7rem, 3vw, 2.1rem);
+      letter-spacing: 0.02em;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 540px;
+    }
+
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .rating-badge .stars {
+      font-size: 0.85rem;
+      color: #facc15; /* gold-ish but discret */
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1.1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 900px) {
+      main {
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 24px;
+      }
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+      border-radius: var(--radius-xl);
+      padding: 18px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.7);
+    }
+
+    @media (min-width: 900px) {
+      .card {
+        padding: 20px 18px;
+      }
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .faq-item {
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      overflow: hidden;
+      transition: border-color 0.2s, background 0.2s, transform 0.12s;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(34, 197, 94, 0.7);
+      transform: translateY(-1px);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 10px 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      text-align: left;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      gap: 10px;
+    }
+
+    .faq-question .label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .faq-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .faq-icon {
+      font-size: 1.1rem;
+      transition: transform 0.2s;
+      flex-shrink: 0;
+      color: var(--text-muted);
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 12px 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      transition: max-height 0.22s ease, padding-bottom 0.2s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 260px;
+      padding-bottom: 10px;
+    }
+
+    .faq-answer strong {
+      color: var(--accent);
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 10px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 8px 9px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(148, 163, 184, 0.75);
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4);
+      background: #020617;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: none;
+      background: radial-gradient(circle at top left, var(--accent), var(--accent-strong));
+      color: #f9fafb;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 4px;
+      box-shadow: 0 10px 20px rgba(22, 163, 74, 0.45);
+      transition: transform 0.12s, box-shadow 0.12s, filter 0.12s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+      box-shadow: 0 14px 28px rgba(22, 163, 74, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 18px rgba(22, 163, 74, 0.5);
+    }
+
+    .btn-primary span.icon-send {
+      font-size: 1rem;
+    }
+
+    .small-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .small-badge {
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(51, 65, 85, 0.95);
+      color: var(--text-muted);
+    }
+
+    .status-line {
+      margin-top: 6px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    }
+
+    /* Modal email */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.78);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .modal-backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.25), rgba(15, 23, 42, 1));
+      border-radius: 20px;
+      padding: 18px 16px 16px;
+      width: min(360px, 92vw);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.7);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s, transform 0.12s;
+    }
+
+    .modal-close:hover {
+      background: rgba(31, 41, 55, 0.95);
+      color: #e5e7eb;
+      transform: translateY(-0.5px);
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .modal-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .modal .btn-primary {
+      width: 100%;
+      justify-content: center;
+      margin-top: 8px;
+    }
+
+    .modal-footer-text {
+      font-size: 0.7rem;
+      color: rgba(209, 213, 219, 0.85);
+      margin-top: 6px;
+    }
+
+    .text-danger {
+      color: var(--danger);
+      font-size: 0.7rem;
+      margin-top: 4px;
+      display: none;
+    }
+
+    /* Rating card bottom */
+    .rating-card {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rating-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .rating-question {
+      font-size: 0.86rem;
+      color: var(--text-main);
+    }
+
+    .rating-stars-interactive {
+      display: inline-flex;
+      gap: 3px;
+    }
+
+    .rating-star-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      color: #4b5563;
+      transition: transform 0.08s, color 0.12s;
+    }
+
+    .rating-star-btn.selected,
+    .rating-star-btn.hovered {
+      color: #facc15;
+      transform: translateY(-1px);
+    }
+
+    .rating-caption {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Email pop-up -->
+  <div class="modal-backdrop" id="emailModalBackdrop">
+    <div class="modal">
+      <button class="modal-close" id="emailModalClose" aria-label="Close">
+        ✕
+      </button>
+      <div class="pill" style="margin-bottom: 6px; font-size: 0.7rem;">
+        👟 Sneaker & fashion updates
+      </div>
+      <div class="modal-title">Stay in the loop</div>
+      <p class="modal-text">
+        Leave your email to receive answers to your questions, new drops and important updates from the shop.
+      </p>
+      <div class="form-group">
+        <label for="modalEmail">Email address</label>
+        <input id="modalEmail" type="email" placeholder="your.email@example.com" />
+        <div class="hint">You can close this window if you just want to browse.</div>
+        <div class="text-danger" id="modalEmailError">Please enter a valid email.</div>
+      </div>
+      <button class="btn-primary" id="modalSaveEmail">
+        <span class="icon-send">📩</span>
+        <span>Keep me updated</span>
+      </button>
+      <div class="modal-footer-text">
+        By entering your email, you agree to receive answers and shop news. No spam.
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <header>
+      <div class="header-top">
+        <div class="pill">
+          <span>👋 Support center</span>
+          <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.09em;">Interactive FAQ</span>
+        </div>
+
+        <div class="rating-badge">
+          <span class="stars">★★★★☆</span>
+          <span>4.5 / 5 rating</span>
+        </div>
+      </div>
+
+      <h1>Welcome to the FAQ page – your help center</h1>
+      <p>
+        Here you can learn who I am, where the products come from, how stock and shipping work, and ask any question before you buy.
+      </p>
+    </header>
+
+    <main>
+      <!-- FAQ column -->
+      <section class="card">
+        <div class="card-title">Frequently asked questions</div>
+        <div class="card-subtitle">Click on a question to show the answer.</div>
+
+        <div class="faq-list">
+          <article class="faq-item open">
+            <button class="faq-question">
+              <div class="label">
+                <div class="faq-badge">1</div>
+                <span>Who are you and why are you selling these items?</span>
+              </div>
+              <span class="faq-icon">›</span>
+            </button>
+            <div class="faq-answer">
+              I’m <strong>an independent seller</strong> who is passionate about fashion and online selling.  
+              I like picking pieces that people actually enjoy wearing and I focus on making sure each order feels safe, smooth and satisfying.  
+              When customers are happy with what they receive and come back again later, that’s exactly what I’m aiming for.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <div class="label">
+                <div class="faq-badge">2</div>
+                <span>Where do the shoes come from?</span>
+              </div>
+              <span class="faq-icon">›</span>
+            </button>
+            <div class="faq-answer">
+              The shoes come from <strong>trusted suppliers I work with regularly</strong> and sometimes from personal resale.  
+              Every pair is visually checked before shipping (condition, cleanliness, size).
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <div class="label">
+                <div class="faq-badge">3</div>
+                <span>How do I know if there is still stock?</span>
+              </div>
+              <span class="faq-icon">›</span>
+            </button>
+            <div class="faq-answer">
+              Each model has <strong>limited stock</strong>.  
+              If you want to be sure before buying, just write the model name + your size in the form on the right/below,
+              and I’ll confirm quickly if it’s still available.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <div class="label">
+                <div class="faq-badge">4</div>
+                <span>Why should I trust you?</span>
+              </div>
+              <span class="faq-icon">›</span>
+            </button>
+            <div class="faq-answer">
+              I focus on <strong>transparency</strong>:  
+              – clear answers by email  
+              – extra pictures/videos of items on request  
+              – tracking number sent as soon as the package is shipped.  
+              You can ask as many questions as you want before you order.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <div class="label">
+                <div class="faq-badge">5</div>
+                <span>How long does shipping take?</span>
+              </div>
+              <span class="faq-icon">›</span>
+            </button>
+            <div class="faq-answer">
+              Orders are usually processed and handed to the carrier quickly.  
+              Depending on your city and the shipping method, delivery is typically around
+              <strong>5 to 11 business days</strong>.  
+              You receive a tracking number so you can follow your package.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <div class="label">
+                <div class="faq-badge">6</div>
+                <span>What if I have another question?</span>
+              </div>
+              <span class="faq-icon">›</span>
+            </button>
+            <div class="faq-answer">
+              Just use the form on the right/below, type your question
+              and you’ll receive the reply directly in your inbox.
+            </div>
+          </article>
+
+          <article class="faq-item">
+            <button class="faq-question">
+              <div class="label">
+                <div class="faq-badge">7</div>
+                <span>Is shipping free on all products?</span>
+              </div>
+              <span class="faq-icon">›</span>
+            </button>
+            <div class="faq-answer">
+              Shipping depends on the <strong>type of product and its value</strong>.  
+              For most drops, shipping is included: around <strong>90% of the items have free shipping</strong>.  
+              For some higher-risk or special products, a small shipping fee may apply. If you’re not sure, just ask in the form and I’ll confirm it for your order.
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Form column -->
+      <section class="card">
+        <div class="card-title">Ask a question</div>
+        <div class="card-subtitle">
+          You’ll receive the answer directly by email.  
+          Fill this form in a few seconds.
+        </div>
+
+        <form id="questionForm" autocomplete="on">
+          <div class="form-group">
+            <label for="name">Name / nickname (optional)</label>
+            <input id="name" type="text" placeholder="Ex. Alex, SneakerLover97" />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Your email (required)</label>
+            <input id="email" type="email" required placeholder="your.email@example.com" />
+          </div>
+
+          <div class="form-group">
+            <label for="topic">Subject (optional)</label>
+            <input id="topic" type="text" placeholder="Stock, shipping, specific model, size..." />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Your question</label>
+            <textarea id="message" required
+              placeholder="Write your question here. E.g. “Is there still any Nike Dunk Panda in size 9?”"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <span class="icon-send">🚀</span>
+            <span>Send my question</span>
+          </button>
+
+          <div class="status-line">
+            <span class="status-dot"></span>
+            <span>Usually answers within 24 hours (excluding weekends).</span>
+          </div>
+
+          <div class="small-badges">
+            <span class="small-badge">📦 Tracking help</span>
+            <span class="small-badge">👟 Size advice</span>
+            <span class="small-badge">💬 Pre-order questions</span>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Rating card at the bottom -->
+    <section class="card rating-card">
+      <div class="rating-row">
+        <div class="rating-question">
+          How much did you enjoy your experience on this page?
+        </div>
+        <div class="rating-stars-interactive" id="ratingStars">
+          <button class="rating-star-btn" data-value="1" aria-label="1 star">★</button>
+          <button class="rating-star-btn" data-value="2" aria-label="2 stars">★</button>
+          <button class="rating-star-btn" data-value="3" aria-label="3 stars">★</button>
+          <button class="rating-star-btn" data-value="4" aria-label="4 stars">★</button>
+          <button class="rating-star-btn" data-value="5" aria-label="5 stars">★</button>
+        </div>
+      </div>
+      <div class="rating-caption" id="ratingCaption">
+        Tap on the stars to rate your experience (1 = not great, 5 = perfect).
+      </div>
+    </section>
+
+    <footer>
+      FAQ page built for customers – personalize this text with your shop name.
+    </footer>
+  </div>
+
+  <script>
+    // --------- CONFIG TO CHANGE ----------
+    // Put here YOUR business email (where questions should be sent)
+    const BUSINESS_EMAIL = "your-email@example.com"; // ⚠️ Replace this with your real email
+    // -------------------------------------
+
+    // FAQ toggle
+    document.querySelectorAll(".faq-item").forEach((item) => {
+      const button = item.querySelector(".faq-question");
+      button.addEventListener("click", () => {
+        const isOpen = item.classList.contains("open");
+        document.querySelectorAll(".faq-item").forEach((i) => i.classList.remove("open"));
+        if (!isOpen) item.classList.add("open");
+      });
+    });
+
+    // Email modal
+    const modalBackdrop = document.getElementById("emailModalBackdrop");
+    const modalClose = document.getElementById("emailModalClose");
+    const modalSaveEmail = document.getElementById("modalSaveEmail");
+    const modalEmail = document.getElementById("modalEmail");
+    const modalEmailError = document.getElementById("modalEmailError");
+
+    window.addEventListener("load", () => {
+      const alreadySeen = localStorage.getItem("faqEmailModalSeen");
+      if (!alreadySeen) {
+        modalBackdrop.classList.add("show");
+      }
+    });
+
+    function closeModal() {
+      modalBackdrop.classList.remove("show");
+      localStorage.setItem("faqEmailModalSeen", "1");
+    }
+
+    modalClose.addEventListener("click", closeModal);
+
+    modalSaveEmail.addEventListener("click", () => {
+      const value = modalEmail.value.trim();
+      if (!value || !value.includes("@") || !value.includes(".")) {
+        modalEmailError.style.display = "block";
+        return;
+      }
+      modalEmailError.style.display = "none";
+      localStorage.setItem("faqUserEmail", value);
+      closeModal();
+    });
+
+    // Form → open mail client with pre-filled email
+    const form = document.getElementById("questionForm");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const topic = document.getElementById("topic").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!email || !email.includes("@") || !email.includes(".")) {
+        alert("Please enter a valid email.");
+        return;
+      }
+      if (!message) {
+        alert("Please write your question.");
+        return;
+      }
+
+      const subject = encodeURIComponent(
+        (topic ? `[Customer question] ${topic}` : "[Customer question] New question") +
+        " – FAQ page"
+      );
+
+      const bodyLines = [
+        "New question sent from the FAQ page.",
+        "",
+        "Customer info:",
+        `Name / nickname: ${name || "Not provided"}`,
+        `Email: ${email}`,
+        "",
+        "Question:",
+        message,
+        "",
+        "Reply directly to this email so the customer gets your answer on their phone."
+      ];
+
+      const body = encodeURIComponent(bodyLines.join("\n"));
+
+      window.location.href = `mailto:${BUSINESS_EMAIL}?subject=${subject}&body=${body}`;
+    });
+
+    // Rating stars (front-end only, no backend)
+    const ratingStars = document.getElementById("ratingStars");
+    const ratingCaption = document.getElementById("ratingCaption");
+    if (ratingStars) {
+      const starButtons = ratingStars.querySelectorAll(".rating-star-btn");
+
+      function updateCaption(value) {
+        const messages = {
+          1: "Thanks for your feedback! I’ll work on making this page better.",
+          2: "Thanks! I’ll keep improving the experience.",
+          3: "Nice! Glad it was okay – I’ll try to make it even better.",
+          4: "Great! Happy you liked the page.",
+          5: "Awesome! Happy you loved the experience 🙌"
+        };
+        ratingCaption.textContent = messages[value] || "Tap on the stars to rate your experience (1 = not great, 5 = perfect).";
+      }
+
+      starButtons.forEach((btn) => {
+        btn.addEventListener("mouseenter", () => {
+          const value = Number(btn.dataset.value);
+          starButtons.forEach((b) => {
+            b.classList.toggle("hovered", Number(b.dataset.value) <= value);
+          });
+        });
+
+        btn.addEventListener("mouseleave", () => {
+          starButtons.forEach((b) => b.classList.remove("hovered"));
+        });
+
+        btn.addEventListener("click", () => {
+          const value = Number(btn.dataset.value);
+          starButtons.forEach((b) => {
+            b.classList.toggle("selected", Number(b.dataset.value) <= value);
+          });
+          updateCaption(value);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
